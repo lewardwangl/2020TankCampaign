@@ -26,7 +26,7 @@
 			<h2>GAME OVER</h2>
 			<p id="Player1Name">play1</p>:<p id="player1Num"></p>
 			<p id="Player2Name">play2</p>:<p id="player2Num"></p>
-			<input id="twoPlayer" type="button" value="搜狐第五届1024冠军决胜赛">
+			<input id="twoPlayer" value="搜狐第五届1024冠军决胜赛">
 			<input id="start" type="button" value="开始">
 		</div>
 		<audio id="startMusic" autoplay>
@@ -42,6 +42,7 @@
 				passNum = 0;//通关数
 			var player1CollideNum = 0,//play1击中坦克数量
 				player2CollideNum = 0;//play2击中坦克数量
+			var ametal = [] //阻挡的位置
 			$(document).ready(function(){
 				$('.select').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 				$('#onePlayer').on('click',function(){//选择一个玩家
@@ -53,6 +54,7 @@
 						player1CollideNum = 0;
 						player2CollideNum = 0;
 						createMyTank(100);
+						creatmetal(ametal)
 						for(var i = 0; i < passNum * 10; i++){
 							createTank(i);
 						}
@@ -72,6 +74,7 @@
 						player2CollideNum = 0;
 						createMyTank(100);
 						createMyTank(200);
+						creatmetal(ametal)
 						for(var i = 0; i < passNum * 10; i++){
 							createTank(i);
 						}
@@ -80,6 +83,7 @@
 						},20);
 					});
 				});
+				
 				//$('#onePlayer').css('display','none');
 				start.addEventListener('click', function() {
 					$('#start').css('display','none');
@@ -127,6 +131,7 @@
 				myTank2Img2 = new Image(),
 				myTank2Img3 = new Image(),
 				boomImg = new Image();//爆炸
+				metal  = new Image()
 				
 			img0.src="img/tank-img0.png";
 			img1.src="img/tank-img1.png";
@@ -142,14 +147,37 @@
 			myTank2Img2.src="img/mytank2-img2.png";
 			myTank2Img3.src="img/mytank2-img3.png";
 			boomImg.src="img/boom-img.png";
+			metal.src = "img/d1160924ab18972b052b38a3e4cd7b899e510a41.jpg"
 			
 //			var timer = setInterval(function(){
 //				loop();
 //			},20);
 //			
-			function creatdefined(){
-				ctx.drawImage(this.img,0,0,100,100,this.X,this.Y,50,50);
+			function creatmetal(ametal){
+				ametal.push([400,300,100,100])
+				ametal.push([1200,300,100,100])
+				ametal.push([400,800,100,100])
+				ametal.push([1200,800,100,100])
+				for(var i = 0;i<ametal.length;i++)
+				{
+					ctx.drawImage(this.metal,ametal[i][0],ametal[i][1],ametal[i][2],ametal[i][3]);
+				}
+
 			}
+
+			function collisionMetal(x,y,r)
+			{
+				for(var i = 0;i<ametal.length;i++)
+				{
+					if(x>ametal[i][0] - r && x < ametal[i][0] + ametal[i][2] && y > ametal[i][1]-r && y<ametal[i][1] + ametal[i][3])
+					{
+						return true
+					}
+				}
+				return false
+			}
+
+
 			
 			function createMyTank(id){
 				var id = id,
@@ -204,16 +232,33 @@
 				};
 				this.move = function(){
 					if(this.direction == 0){
-						this.Y = this.Y - speed < 0 ? 0 : this.Y - speed;
+						var ret = collisionMetal( this.X, this.Y - speed,tankWidth)
+						if(false == ret)
+						{
+							this.Y = this.Y - speed < 0 ? 0 : this.Y - speed;
+						}
 						this.img = img0;
 					}else if(this.direction == 1){
-						this.X = this.X + speed > screenX - tankWidth ? screenX - tankWidth : this.X + speed;
+						var ret = collisionMetal( this.X + speed, this.Y,tankWidth)
+						if(false == ret)
+						{
+							this.X = this.X + speed > screenX - tankWidth ? screenX - tankWidth : this.X + speed;
+						}
 						this.img = img1;
 					}else if(this.direction == 2){
-						this.Y = this.Y + speed > screenY - tankWidth ? screenY - tankWidth : this.Y + speed;
+						var ret = collisionMetal( this.X, this.Y + speed,tankWidth)
+						if(false == ret)
+						{
+							this.Y = this.Y + speed > screenY - tankWidth ? screenY - tankWidth : this.Y + speed;
+						}
 						this.img = img2;
 					}else if(this.direction == 3){
-						this.X = this.X - speed < 0 ? 0 : this.X - speed;
+						var ret = collisionMetal( this.X - speed, this.Y ,tankWidth)
+						if(false == ret)
+						{
+							this.X = this.X - speed < 0 ? 0 : this.X - speed;
+						}
+						
 						this.img = img3;
 					}
 				};
@@ -400,19 +445,35 @@
 					}
 				}
 				if(!player1Die && myTankUp){//上移动
-					myTank['Y'] =myTank['Y'] - myTank['speed'] < 0 ? 0 : myTank['Y'] - myTank['speed'];
+					var ret = collisionMetal( myTank.X, myTank['Y'] - myTank['speed'],tankWidth)
+					if(false == ret)
+					{
+						myTank['Y'] =myTank['Y'] - myTank['speed'] < 0 ? 0 : myTank['Y'] - myTank['speed'];
+					}
 					myTank['direction'] = 0;
 					myTank['img'] = myTankImg0;
 				}else if(!player1Die && myTankDown){//下移动
-					myTank.Y = myTank.Y + myTank.speed > screenY - tankWidth ? screenY - tankWidth : myTank.Y + myTank.speed;
+					var ret = collisionMetal( myTank.X, myTank.Y + myTank.speed,tankWidth)
+					if(false == ret)
+					{
+						myTank.Y = myTank.Y + myTank.speed > screenY - tankWidth ? screenY - tankWidth : myTank.Y + myTank.speed;
+					}
 					myTank['direction'] = 2;
 					myTank['img'] = myTankImg2;
 				}else if(!player1Die && myTankRight){//右移动
-					myTank['X'] =myTank.X + myTank['speed'] > screenX - tankWidth ? screenX - tankWidth : myTank.X + myTank.speed;
+					var ret = collisionMetal( myTank.X + myTank.speed, myTank['Y'],tankWidth)
+					if(false == ret)
+					{
+						myTank['X'] =myTank.X + myTank['speed'] > screenX - tankWidth ? screenX - tankWidth : myTank.X + myTank.speed;
+					}
 					myTank['direction'] = 1;
 					myTank['img'] = myTankImg1;
 				}else if(!player1Die && myTankLeft){//左移动
-					myTank['X'] = myTank.X - myTank['speed'] < 0 ? 0 : myTank.X - myTank.speed;
+					var ret = collisionMetal( myTank.X - myTank.speed, myTank['Y'],tankWidth)
+					if(false == ret)
+					{
+						myTank['X'] = myTank.X - myTank['speed'] < 0 ? 0 : myTank.X - myTank.speed;
+					}
 					myTank['direction'] = 3;
 					myTank['img'] = myTankImg3;
 				}
@@ -423,19 +484,35 @@
 						}
 					}
 					if(!player2Die && myTank2Up){//上移动
-						myTank2['Y'] = myTank2['Y'] - myTank2['speed'] < 0 ? 0 : myTank2['Y'] - myTank2['speed'];
+						var ret = collisionMetal(myTank2.X, myTank2['Y'] - myTank2['speed'],tankWidth)
+						if(false == ret)
+						{
+							myTank2['Y'] = myTank2['Y'] - myTank2['speed'] < 0 ? 0 : myTank2['Y'] - myTank2['speed'];
+						}
 						myTank2['direction'] = 0;
 						myTank2['img'] = myTank2Img0;
 					}else if(!player2Die && myTank2Down){//下移动
-						myTank2.Y = myTank2.Y + myTank2.speed > screenY - tankWidth ? screenY - tankWidth : myTank2.Y + myTank2.speed;
+						var ret = collisionMetal(myTank2.X, myTank2.Y + myTank2.speed,tankWidth)
+						if(false == ret)
+						{
+							myTank2.Y = myTank2.Y + myTank2.speed > screenY - tankWidth ? screenY - tankWidth : myTank2.Y + myTank2.speed;
+						}
 						myTank2['direction'] = 2;
 						myTank2['img'] = myTank2Img2;
 					}else if(!player2Die && myTank2Right){//右移动
-						myTank2['X'] =myTank2.X + myTank2['speed'] > screenX - tankWidth ? screenX - tankWidth : myTank2.X + myTank2.speed;
+						var ret = collisionMetal(myTank2.X + myTank2.speed,myTank2.Y,tankWidth)
+						if(false == ret)
+						{
+							myTank2['X'] =myTank2.X + myTank2['speed'] > screenX - tankWidth ? screenX - tankWidth : myTank2.X + myTank2.speed;
+						}
 						myTank2['direction'] = 1;
 						myTank2['img'] = myTank2Img1;
 					}else if(!player2Die && myTank2Left){//左移动
-						myTank2['X'] = myTank2.X - myTank2['speed'] < 0 ? 0 : myTank2.X - myTank2.speed;
+						var ret = collisionMetal(myTank2.X - myTank2.speed,myTank2.Y,tankWidth)
+						if(false == ret)
+						{
+							myTank2['X'] = myTank2.X - myTank2['speed'] < 0 ? 0 : myTank2.X - myTank2.speed;
+						}
 						myTank2['direction'] = 3;
 						myTank2['img'] = myTank2Img3;
 					}
@@ -456,6 +533,11 @@
 					aDelMyBullet2 = [],//储存我方不在屏幕中的子弹的位置
 					aDelBullet = [];//存储敌方不在屏幕中的子弹的位置
 					myTankMove();//移动我方Tank位置
+
+				for(var i = 0;i<ametal.length;i++)
+				{
+					ctx.drawImage(this.metal,0,0,200,200,ametal[i][0],ametal[i][1],ametal[i][2],ametal[i][3]);
+				}
 					
 				//敌方
 				for(var i = 0,aTankLen = aTankCount.length; i < aTankLen; i++){//刷新敌方Tank
@@ -533,6 +615,12 @@
 					if(bullet.X > screenX || bullet.X < -10 || bullet.Y > screenY || bullet.Y < -10){//跑出屏幕的炮弹
 						aDelMyBullet1.push(i);
 					}
+					var ret = collisionMetal(bullet.X,bullet.Y,bulletWidth)//检测和金属防御碰撞
+					if(true == ret)
+					{
+						ctx.drawImage(boomImg,0,0,36,36,bullet.X - 18,bullet.Y  - 18,36,36);//画爆炸效果
+						aDelMyBullet1.push(i);
+					}
 				}
 				aDelMyBullet1.reverse();//倒置数组
 				for(var i = 0, len = aDelMyBullet1.length; i < len; i++){//删除子弹
@@ -543,6 +631,12 @@
 					bullet.draw();//画子弹
 					bullet.move();//子弹移动
 					if(bullet.X > screenX || bullet.X < -10 || bullet.Y > screenY || bullet.Y < -10){//跑出屏幕的炮弹
+						aDelMyBullet2.push(i);
+					}
+					var ret = collisionMetal(bullet.X,bullet.Y,bulletWidth)//检测和金属防御碰撞
+					if(true == ret)
+					{
+						ctx.drawImage(boomImg,0,0,36,36,bullet.X - 18,bullet.Y  - 18,36,36);//画爆炸效果
 						aDelMyBullet2.push(i);
 					}
 				}
@@ -624,6 +718,12 @@
 					bullet.draw();//画子弹
 					bullet.move();//子弹移动
 					if(bullet.X > screenX || bullet.X < -10 || bullet.Y > screenY || bullet.Y < -10){//跑出屏幕的炮弹
+						aDelBullet.push(i);
+					}
+					var ret = collisionMetal(bullet.X,bullet.Y,bulletWidth)//检测和金属防御碰撞
+					if(true == ret)
+					{
+						ctx.drawImage(boomImg,0,0,36,36,bullet.X - 18,bullet.Y  - 18,36,36);//画爆炸效果
 						aDelBullet.push(i);
 					}
 				}
