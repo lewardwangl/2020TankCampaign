@@ -22,13 +22,17 @@
 	</head>
 
 	<body>
-		<div class="select">
-			<h2>GAME OVER</h2>
-			<p id="Player1Name">play1</p>:<p id="player1Num"></p>
-			<p id="Player2Name">play2</p>:<p id="player2Num"></p>
-			<!--<input id="onePlayer" type="button" value="搜狐第五届1024挑战赛">-->
-			<input id="twoPlayer" type="button" value="搜狐第五届1024总决赛">
-		</div>
+			<div class="select">
+				<h2>GAME OVER</h2>
+				<p id="Player1Name">play1</p>:<p id="player1Num"></p>
+				<p id="Player2Name">play2</p>:<p id="player2Num"></p>
+				<input id="twoPlayer" type="button" value="搜狐第五届1024总决赛">
+				<input id="start" type="button" value="开始">
+				<!--<input id="twoPlayer" type="button" value="搜狐第五届1024总决赛">-->
+			</div>
+			<audio id="startMusic" autoplay>
+				<source src="music/坦克大战音乐.mp3" type="audio/mp3">
+			</audio>
 		<canvas id="canvas"></canvas>
 		<script>
 			var timer = null;
@@ -78,14 +82,18 @@
 					});
 				});
 				//$('#onePlayer').css('display','none');
-				splash = setInterval(function(){
+				start.addEventListener('click', function() {
+					$('#start').css('display','none');
+					splash = setInterval(function(){
 					$('#twoPlayer').fadeOut(100).fadeIn(100);
-				}, 200)
-				setTimeout(() => {
-					clearInterval(splash)
-					$('#twoPlayer').click()
-				}, 3*1000);
-			
+					}, 200)
+					var audio = document.getElementById("startMusic");
+					audio.play();
+					setTimeout(() => {
+						clearInterval(splash)
+						$('#twoPlayer').click()
+					}, 3*1000);
+				});
 
 			});
 			var canvas = document.getElementById('canvas');

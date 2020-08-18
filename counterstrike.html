@@ -26,9 +26,12 @@
 			<h2>GAME OVER</h2>
 			<p id="Player1Name">play1</p>:<p id="player1Num"></p>
 			<p id="Player2Name">play2</p>:<p id="player2Num"></p>
-			<!--<input id="onePlayer" type="button" value="搜狐第五届1024挑战赛">-->
 			<input id="twoPlayer" type="button" value="搜狐第五届1024冠军决胜赛">
+			<input id="start" type="button" value="开始">
 		</div>
+		<audio id="startMusic" autoplay>
+			<source src="music/坦克大战音乐.mp3" type="audio/mp3">
+		</audio>
 		<canvas id="canvas"></canvas>
 		<script>
 			var timer = null;
@@ -78,13 +81,18 @@
 					});
 				});
 				//$('#onePlayer').css('display','none');
-				splash = setInterval(function(){
+				start.addEventListener('click', function() {
+					$('#start').css('display','none');
+					splash = setInterval(function(){
 					$('#twoPlayer').fadeOut(100).fadeIn(100);
-				}, 200)
-				setTimeout(() => {
-					clearInterval(splash)
-					$('#twoPlayer').click()
-				}, 3*1000);
+					}, 200)
+					var audio = document.getElementById("startMusic");
+					audio.play();
+					setTimeout(() => {
+						clearInterval(splash)
+						$('#twoPlayer').click()
+					}, 3*1000);
+				});
 			
 
 			});
@@ -114,6 +122,10 @@
 				myTankImg1 = new Image(),
 				myTankImg2 = new Image(),
 				myTankImg3 = new Image(),
+				myTank2Img0 = new Image(),//我方坦克2
+				myTank2Img1 = new Image(),
+				myTank2Img2 = new Image(),
+				myTank2Img3 = new Image(),
 				boomImg = new Image();//爆炸
 				
 			img0.src="img/tank-img0.png";
@@ -125,12 +137,19 @@
 			myTankImg1.src="img/mytank-img1.png";
 			myTankImg2.src="img/mytank-img2.png";
 			myTankImg3.src="img/mytank-img3.png";
+			myTank2Img0.src="img/mytank2-img0.png";
+			myTank2Img1.src="img/mytank2-img1.png";
+			myTank2Img2.src="img/mytank2-img2.png";
+			myTank2Img3.src="img/mytank2-img3.png";
 			boomImg.src="img/boom-img.png";
 			
 //			var timer = setInterval(function(){
 //				loop();
 //			},20);
 //			
+			function creatdefined(){
+				ctx.drawImage(this.img,0,0,100,100,this.X,this.Y,50,50);
+			}
 			
 			function createMyTank(id){
 				var id = id,
@@ -406,19 +425,19 @@
 					if(!player2Die && myTank2Up){//上移动
 						myTank2['Y'] = myTank2['Y'] - myTank2['speed'] < 0 ? 0 : myTank2['Y'] - myTank2['speed'];
 						myTank2['direction'] = 0;
-						myTank2['img'] = myTankImg0;
+						myTank2['img'] = myTank2Img0;
 					}else if(!player2Die && myTank2Down){//下移动
 						myTank2.Y = myTank2.Y + myTank2.speed > screenY - tankWidth ? screenY - tankWidth : myTank2.Y + myTank2.speed;
 						myTank2['direction'] = 2;
-						myTank2['img'] = myTankImg2;
+						myTank2['img'] = myTank2Img2;
 					}else if(!player2Die && myTank2Right){//右移动
 						myTank2['X'] =myTank2.X + myTank2['speed'] > screenX - tankWidth ? screenX - tankWidth : myTank2.X + myTank2.speed;
 						myTank2['direction'] = 1;
-						myTank2['img'] = myTankImg1;
+						myTank2['img'] = myTank2Img1;
 					}else if(!player2Die && myTank2Left){//左移动
 						myTank2['X'] = myTank2.X - myTank2['speed'] < 0 ? 0 : myTank2.X - myTank2.speed;
 						myTank2['direction'] = 3;
-						myTank2['img'] = myTankImg3;
+						myTank2['img'] = myTank2Img3;
 					}
 				}
 			}
@@ -561,6 +580,7 @@
 						var rect = checkCollide(aMyTankCount[i]['X'], aMyTankCount[i]['Y'], tankWidth, tankWidth, bulletX, bulletY, bulletWidth, bulletWidth);
 						var isCollide = (rect[2] - rect[0]) * (rect[3] - rect[1]) > 0;
 						if(isCollide){//发生碰撞
+							ctx.drawImage(boomImg,0,0,36,36,aMyTankCount[i]['X'] - 18,aMyTankCount[i]['Y'] - 18,36,36);//画爆炸效果
 							aMyTankCollide.push(i);//存储被击中坦克在数组中的位置
 							aBulletCollide.push(j);//存储击中坦克的炮弹在数组中的位置
 							if(aMyTankCount[i]['id'] == 100){
@@ -578,6 +598,7 @@
 						var rect = checkCollide(aMyTankCount[i]['X'], aMyTankCount[i]['Y'], tankWidth, tankWidth, bulletX, bulletY, bulletWidth, bulletWidth);
 						var isCollide = (rect[2] - rect[0]) * (rect[3] - rect[1]) > 0;
 						if(isCollide){//发生碰撞
+							ctx.drawImage(boomImg,0,0,36,36,aMyTankCount[i]['X'] - 18,aMyTankCount[i]['Y'] - 18,36,36);//画爆炸效果
 							aMyTankCollide.push(i);//存储被击中坦克在数组中的位置
 							aBulletCollide.push(j);//存储击中坦克的炮弹在数组中的位置
 							if(aMyTankCount[i]['id'] == 100){
