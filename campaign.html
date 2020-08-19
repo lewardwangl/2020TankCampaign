@@ -252,6 +252,7 @@
 				this.X = X;//子弹坐标
 				this.Y = Y;
 				this.color = name > 300 ? 'yellow' : 'skyblue';//子弹颜色
+				if(name==200) this.color = 'red'
 				this.move = function(){
 					if(this.direction == 0){
 						this.Y -= speed;
