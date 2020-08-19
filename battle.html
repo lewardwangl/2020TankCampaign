@@ -18,7 +18,7 @@
 			.select input{display:block;width:400px;height:50px;border:1px solid #000;margin:0 auto;font-size:30px;outline: 0;cursor:pointer;}
 			.select input:nth-of-type(1){margin-top:80px;margin-bottom: 50px;}
 			.select input:hover{background-color: #fff;}
-			.bar{width:100%;height:100;;background:#fff;opacity:0.2;}
+			.bar{width:100%;height:100;;background:#fff;opacity:0.8;}
 		</style>
 	</head>
 
@@ -28,7 +28,7 @@
 			<p id="player2Numbar"></p><p id="Player2Name">play2</p>
 		</div>
 		<div class="select">
-			<h2>GAME OVER</h2>
+			<h2 id="result">GAME OVER</h2>
 			<p id="Player1Name">play1:</p><p id="player1Num"></p>
 			<p id="Player2Name">play2:</p><p id="player2Num"></p>
 			<input id="onePlayer" disabled='disabled' type="button" value="搜狐第五届1024挑战赛">
@@ -717,6 +717,7 @@
 				}
 				if(aTankCount.length == 0){//当所有坦克都被消灭的时候进入下一关
 					clearInterval(timer);
+					$('#result').text("victory")
 						$('.select h2').css('display','block');
 						$('.select p').css('display','block');
 						$('#player1Num').text(player1CollideNum);
