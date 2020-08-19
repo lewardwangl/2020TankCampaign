@@ -31,7 +31,7 @@ playerB.land = function()
     }
 
     
-    
+    return "playerB"
     console.log("echo playerB",ev.keyCode,evfireB)
 }
 playerB.leave = function(){
