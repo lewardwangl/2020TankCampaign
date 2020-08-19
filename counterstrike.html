@@ -31,7 +31,7 @@
 			<h2 id="result">GAME OVER</h2>
 			<p id="Player1Name">play1:</p><p id="player1Num"></p>
 			<p id="Player2Name">play2:</p><p id="player2Num"></p>
-			<input id="twoPlayer" value="搜狐第五届1024冠军决胜赛">
+			<input id="twoPlayer" disabled='disabled' value="搜狐第五届1024冠军决胜赛">
 			<input id="start" type="button" value="开始">
 			<input id="bg" type="button" value="symphony">
 		</div>
@@ -842,7 +842,7 @@
 						aBulletCount = [];//清空所有敌方坦克子弹
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
-						remix.play();
+						audioplay(remix)
 						return true;
 					}
 				}else{//2个玩家的时候
@@ -860,7 +860,7 @@
 						aBulletCount = [];//清空所有敌方坦克子弹
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
-						remix.play();
+						audioplay(remix)
 						return true;
 					}
 					else if(aTankCount.length == 0 && (player1Die || player2Die)){
@@ -878,7 +878,7 @@
 						aBulletCount = [];//清空所有敌方坦克子弹
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
-						remix.play();
+						audioplay(remix)
 						return true;
 					}
 				}
