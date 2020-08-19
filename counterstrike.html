@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="js/playerB.js"></script>
 		<style type="text/css">
 			*{margin:0;padding:0;}
-			html,body{width:100%;height: 100%}
+			html,body{width:100%;height: 100%;align-self:center;}
 			body{background-color: #000;overflow: hidden;}
 			.select{width:600px;height:400px;background:#fff;position:absolute;left:50%;margin-left:-300px;top:-400px;opacity:0.2;}
 			.select h2{height:50px;line-height:50px;text-align: center;display:none;}
@@ -159,6 +159,9 @@
 //				console.log(screenX,screenY);
 			canvas.width = screenX;
 			canvas.height = screenY;
+
+			//canvas.width = 1790;
+			//canvas.height = 1790;
 			
 			var tankID = 1000;
 			var aTankClass = [{rank:1,color:'green'},{rank:2,color:'blue'},{rank:3,color:'red'}];//敌军Tank种类
