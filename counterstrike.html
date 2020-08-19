@@ -23,7 +23,7 @@
 
 	<body>
 		<div class="select">
-			<h2>GAME OVER</h2>
+			<h2 id="result">GAME OVER</h2>
 			<p id="Player1Name">play1:</p><p id="player1Num"></p>
 			<p id="Player2Name">play2:</p><p id="player2Num"></p>
 			<input id="twoPlayer" value="搜狐第五届1024冠军决胜赛">
@@ -119,6 +119,7 @@
 				//$('#onePlayer').css('display','none');
 				start.addEventListener('click', function() {
 					$('#start').css('display','none');
+					$('#bg').css('display','none');
 					splash = setInterval(function(){
 					$('#twoPlayer').fadeOut(100).fadeIn(100);
 					}, 200)
@@ -851,6 +852,7 @@
 					}
 					else if(aTankCount.length == 0 && (player1Die || player2Die)){
 						clearInterval(timer);
+						$('#result').text("victory")
 						$('.select h2').css('display','block');
 						$('.select p').css('display','block');
 						$('#player1Num').text(player1CollideNum);
