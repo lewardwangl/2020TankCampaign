@@ -226,10 +226,13 @@
 				play.play()
 			}
 			function creatmetal(ametal){
-				ametal.push([400,300,100,100])
-				ametal.push([1200,300,100,100])
-				ametal.push([400,800,100,100])
-				ametal.push([1200,800,100,100])
+				var px = window.innerWidth
+				var py = window.innerHeight -100
+
+				ametal.push([px/4 - 50,py/4 - 50,100,100])
+				ametal.push([px*3/4 - 50,py/4 - 50,100,100])
+				ametal.push([px/4 - 50,py*3/4 - 50,100,100])
+				ametal.push([px*3/4 - 50,py*3/4 - 50,100,100])
 				for(var i = 0;i<ametal.length;i++)
 				{
 					ctx.drawImage(this.metal,ametal[i][0],ametal[i][1],ametal[i][2],ametal[i][3]);
