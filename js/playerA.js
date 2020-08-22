@@ -11,8 +11,21 @@ window.playerA = new (class PlayerControl {
   land() {
     this.#setName();
     // 当前的坦克实例
-    const currentTank = aMyTankCount[this.type === "A" ? 0 : 1];
-    const enemyTank = aMyTankCount[this.type === "A" ? 1 : 0];
+    var cur = undefined
+    var enr = undefined
+    aMyTankCount.forEach(element => {
+      var c = element
+      if(c['id'] == 100)
+      {
+        cur = c
+      }
+      if(c['id'] == 200)
+      {
+        enr = c
+      }
+    });
+    const currentTank = cur
+    const enemyTank = enr
     if (!currentTank) return;
 
     //下面是方便读取的全局数据的别名
