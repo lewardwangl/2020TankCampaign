@@ -82,6 +82,7 @@
 				passNum = 0;//通关数
 			var player1CollideNum = 0,//play1击中坦克数量
 				player2CollideNum = 0;//play2击中坦克数量
+			var ametal = [] //阻挡的位置
 			$(document).ready(function(){
 
 				bg.addEventListener('click', function() {			
@@ -509,7 +510,8 @@
 				if(checkGameOver()){return};
 				ctx.clearRect(0,0,screenX,screenY);
 				var aTankCollide = [],//存储被击中的敌方坦克
-					aMyBulletCollide = [],//我方击中坦克的炮弹
+					aMyBulletCollide1 = [],//我方击中坦克的炮弹
+					aMyBulletCollide2 = [],//我方击中坦克的炮弹
 					aMyTankCollide = [],//存储被击中的我方坦克
 					aBulletCollide = [],//敌方击中我方坦克的炮弹
 					aDelMyBullet1 = [],//储存我方不在屏幕中的子弹的位置
@@ -530,7 +532,7 @@
 						if(isCollide){//发生碰撞
 							audioplay(boom)
 							aTankCollide.push(i);//存储被击中坦克在数组中的位置
-							aMyBulletCollide.push(j);//存储击中坦克的炮弹在数组中的位置
+							aMyBulletCollide1.push(j);//存储击中坦克的炮弹在数组中的位置
 							if(aMyBulletCount1[j]['name'] == 100){
 								player1CollideNum++;
 							}else if(aMyBulletCount1[j]['name'] == 200){
@@ -556,7 +558,7 @@
 						if(isCollide){//发生碰撞
 							audioplay(boom)
 							aTankCollide.push(i);//存储被击中坦克在数组中的位置
-							aMyBulletCollide.push(j);//存储击中坦克的炮弹在数组中的位置
+							aMyBulletCollide2.push(j);//存储击中坦克的炮弹在数组中的位置
 							if(aMyBulletCount2[j]['name'] == 100){
 								player1CollideNum++;
 							}else if(aMyBulletCount2[j]['name'] == 200){
@@ -571,22 +573,18 @@
 					tank.fire();
 				}
 				aTankCollide.reverse();
-				aMyBulletCollide.reverse();
+				aMyBulletCollide1.reverse();
+				aMyBulletCollide2.reverse();
 				for(var i = 0, aTankCollideLen = aTankCollide.length; i < aTankCollideLen; i++){//删除被击中的敌方Tank
 					aTankCount.splice(aTankCollide[i],1);
 				}
-				for(var i = 0, aMyBulletCollideLen = aMyBulletCollide.length; i < aMyBulletCollideLen; i++){
-					try{
-						ctx.drawImage(boomImg,0,0,36,36,aMyBulletCount1[aMyBulletCollide[i]]['X'] - 18,aMyBulletCount1[aMyBulletCollide[i]]['Y'] - 18,36,36);//画爆炸效果
-					aMyBulletCount1.splice(aMyBulletCollide[i],1);//删除我方击中坦克的炮弹
-					}catch{}
-
+				for(var i = 0, aMyBulletCollideLen = aMyBulletCollide1.length; i < aMyBulletCollideLen; i++){
+						ctx.drawImage(boomImg,0,0,36,36,aMyBulletCount1[aMyBulletCollide1[i]]['X'] - 18,aMyBulletCount1[aMyBulletCollide1[i]]['Y'] - 18,36,36);//画爆炸效果
+					aMyBulletCount1.splice(aMyBulletCollide1[i],1);//删除我方击中坦克的炮弹
 				}
-				for(var i = 0, aMyBulletCollideLen = aMyBulletCollide.length; i < aMyBulletCollideLen; i++){
-					try{
-					ctx.drawImage(boomImg,0,0,36,36,aMyBulletCount2[aMyBulletCollide[i]]['X'] - 18,aMyBulletCount2[aMyBulletCollide[i]]['Y'] - 18,36,36);//画爆炸效果
-					aMyBulletCount2.splice(aMyBulletCollide[i],1);//删除我方击中坦克的炮弹
-					}catch{}
+				for(var i = 0, aMyBulletCollideLen = aMyBulletCollide2.length; i < aMyBulletCollideLen; i++){
+					ctx.drawImage(boomImg,0,0,36,36,aMyBulletCount2[aMyBulletCollide2[i]]['X'] - 18,aMyBulletCount2[aMyBulletCollide2[i]]['Y'] - 18,36,36);//画爆炸效果
+					aMyBulletCount2.splice(aMyBulletCollide2[i],1);//删除我方击中坦克的炮弹
 				}
 				for(var i = 0,len = aMyBulletCount1.length; i < len; i++){//刷新子弹
 					var bullet = aMyBulletCount1[i];
