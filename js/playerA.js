@@ -61,8 +61,8 @@ window.playerA = new (class PlayerControl {
                             this.#DIRECTION.STOP, this.#DIRECTION.STOP, this.#DIRECTION.STOP, this.#DIRECTION.STOP, this.#DIRECTION.STOP, this.#DIRECTION.STOP, this.#DIRECTION.STOP,);
     let BulletPosition = new Array((0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0),  );
 
-    this.#calcBulletDistance(enemyBullets, currentTankX, currentTankY, Bullet, BulletPosition,currentTankWH, bulletWH)
-    this.#calcBulletDistance(eBullets, currentTankX, currentTankY, Bullet,BulletPosition, currentTankWH, bulletWH)
+    this.#calcBulletDistance(enemyBullets, currentTankX, currentTankY, Bullet, BulletPosition,currentTankWH, bulletWH,currentTankDirect)
+    this.#calcBulletDistance(eBullets, currentTankX, currentTankY, Bullet,BulletPosition, currentTankWH, bulletWH,currentTankDirect)
     moveDirection = this.#avoidBullet(currentTankX, currentTankY, currentTankWH, Bullet,BulletPosition, moveDirection)
 
     var lateEnemy = undefined
@@ -333,7 +333,7 @@ window.playerA = new (class PlayerControl {
     9 10 11
       12
   */
-  #calcBulletDistance(arraybullet, currentTankX, currentTankY, Bullet,BulletPosition,currentTankWH, bulletWH) {
+  #calcBulletDistance(arraybullet, currentTankX, currentTankY, Bullet,BulletPosition,currentTankWH, bulletWH,currentTankDirect) {
     var dis
     for (const bullet of arraybullet) {
       dis = this.#collision(
@@ -345,9 +345,12 @@ window.playerA = new (class PlayerControl {
       if (true == dis ) {
         Bullet[7] = bullet.direction
         BulletPosition[7] = new Array(bullet.X,bullet.Y)
-      } else if(true==this.#collisionMetal(currentTankX + currentTankWH,currentTankY,currentTankWH))
+      } else if(true==this.#collisionMetal(currentTankX + currentTankWH,currentTankY,currentTankWH) || true==this.#isNearBoundary(currentTankX, currentTankY, this.#DIRECTION.RIGHT, currentTankWH))
       {
-        //Bullet[7] = this.#DIRECTION.LEFT 
+        if(currentTankDirect==this.#DIRECTION.RIGHT )
+        {
+          Bullet[7] = this.#DIRECTION.LEFT 
+        }
       }
       dis = this.#collision(
         currentTankX + 2 * currentTankWH,
@@ -378,9 +381,12 @@ window.playerA = new (class PlayerControl {
       if (true == dis) {
         Bullet[5] = bullet.direction
         BulletPosition[5] = new Array(bullet.X,bullet.Y)
-      }else if(true==this.#collisionMetal(currentTankX - currentTankWH,currentTankY,currentTankWH))
+      }else if(true==this.#collisionMetal(currentTankX - currentTankWH,currentTankY,currentTankWH) || true==this.#isNearBoundary(currentTankX, currentTankY, this.#DIRECTION.LEFT, currentTankWH))
       {
-        //Bullet[5] = this.#DIRECTION.RIGHT 
+        if(currentTankDirect==this.#DIRECTION.LEFT )
+        {
+          Bullet[5]= this.#DIRECTION.RIGHT
+        }
       }
       dis = this.#collision(
         currentTankX,
@@ -391,9 +397,12 @@ window.playerA = new (class PlayerControl {
       if (true == dis) {
         Bullet[10] = bullet.direction
         BulletPosition[10] = new Array(bullet.X,bullet.Y)
-      } else if(true==this.#collisionMetal(currentTankX,currentTankY + currentTankWH,currentTankWH))
+      } else if(true==this.#collisionMetal(currentTankX,currentTankY + currentTankWH,currentTankWH) || true==this.#isNearBoundary(currentTankX, currentTankY, this.#DIRECTION.DOWN, currentTankWH))
       {
-        //Bullet[10] = this.#DIRECTION.UP 
+        if(currentTankDirect==this.#DIRECTION.DOWN )
+        {
+          Bullet[10]= this.#DIRECTION.UP
+        }
       }
       dis = this.#collision(
         currentTankX,
@@ -424,9 +433,12 @@ window.playerA = new (class PlayerControl {
       if (true == dis) {
         Bullet[2] = bullet.direction
         BulletPosition[2] =new Array(bullet.X,bullet.Y)
-      }else if(true==this.#collisionMetal(currentTankX,currentTankY - currentTankWH,currentTankWH))
+      }else if(true==this.#collisionMetal(currentTankX,currentTankY - currentTankWH,currentTankWH) || true==this.#isNearBoundary(currentTankX, currentTankY, this.#DIRECTION.UP, currentTankWH))
       {
-        //Bullet[2] = this.#DIRECTION.DOWN 
+        if(currentTankDirect==this.#DIRECTION.UP )
+        {
+          Bullet[2]= this.#DIRECTION.DOWN
+        }
       }
       dis = this.#collision(
         currentTankX - currentTankWH,
