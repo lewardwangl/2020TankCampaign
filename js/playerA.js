@@ -269,7 +269,9 @@ window.playerA = new (class PlayerControl {
             moveDirection = this.#DIRECTION.RIGHT;
           }   
       }
-      else { console.log("水平无法躲避") }
+      if(undefined==moveDirection){
+        console.log("水平无法躲避")
+        }
     }
     else if ((this.#DIRECTION.DOWN == Bullet[0] || this.#DIRECTION.UP == Bullet[12])) { //考虑左右移动
       if (!this.#isNearBoundary(currentTankX, currentTankY, this.#DIRECTION.LEFT, currentTankWH
@@ -311,7 +313,10 @@ window.playerA = new (class PlayerControl {
           console.log("安全躲避移动下，撤销上")
           moveDirection = this.#DIRECTION.DOWN;
         }   
-      } else { console.log("垂直无法躲避") }
+      } 
+      if(undefined==moveDirection){
+         console.log("垂直无法躲避")
+         }
     }
     else if ((this.#DIRECTION.RIGHT == Bullet[4] || this.#DIRECTION.LEFT == Bullet[8])) { //考虑垂直移动
       if (!this.#isNearBoundary(currentTankX, currentTankY, this.#DIRECTION.UP, currentTankWH
