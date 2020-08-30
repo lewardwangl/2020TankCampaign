@@ -11,21 +11,21 @@
 			*{margin:0;padding:0;}
 			html,body{width:100%;height: 100%;}
 			body{background-color: #000;overflow: hidden;}
-			.select{width:800px;height:400px;position:absolute;left:50%;margin-left:-400px;top:-400px;opacity:0.2;background-image: url("img/splash.png");background-repeat:no-repeat;background-size:100% 100%;}
-			.select h2{height:50px;line-height:50px;text-align: center;display:none;}
+			.select{width:800px;height:350px;position:absolute;left:50%;margin-left:-400px;top:-400px;opacity:0.2;background-image: url("img/splash.png");background-repeat:no-repeat;background-size:100% 100%;}
+			.select h2{height:100px;line-height:50px;text-align: center;display:none;}
 			.select p{text-align: center;font-size: 20px;display:none;}
 			.select p span{margin-right: 20px;}
 			.select input{display:block;width:400px;height:50px;border:1px solid #000;margin:0 auto;font-size:30px;outline: 0;cursor:pointer;}
 			/*.select input:nth-of-type(1){margin-top:80px;margin-bottom: 50px;}
 			.select input:hover{background-color: #fff;}*/
-			.bar{width:100%;height:100px;;flex-direction: column;;opacity:0.8}
-			.playerA{display:inline-block;;background-color: #000}
-			.playerB{display:inline-block;;float: right;background-color: #000}
-			.bardisplayA{font-size: 60px;width: 250px;color: skyblue;background-color: #000}
-			.bardisplayB{font-size: 60px;width: 250px;color: red;background-color: #000}
-			.bardisplayAnum{font-size: 60px;color: skyblue;width: 100px;;background-color: #000}
-			.bardisplayBnum{font-size: 60px;color: red;width: 100px;;background-color: #000}
-			.startbutton{margin-top:230px;}
+			.bar{width:100%;height:100px;;flex-direction: column;;opacity:0.8;background-image: url("img/column2.png");background-repeat:no-repeat;background-size:100% 500%;}
+			.playerA{display:inline-block;;background-color: transparent}
+			.playerB{display:inline-block;;float: right;background-color: transparent}
+			.bardisplayA{font-size: 60px;width: 250px;color: skyblue;background-color: transparent}
+			.bardisplayB{font-size: 60px;width: 250px;color: red;background-color: transparent}
+			.bardisplayAnum{font-size: 60px;color: skyblue;width: 100px;;background-color:transparent}
+			.bardisplayBnum{font-size: 60px;color: red;width: 100px;;background-color: transparent}
+			.startbutton{margin-top:200px;}
 			.divbutton{ background-color:transparent;border-style:none;border-color: transparent}
 		</style>
 	</head>
@@ -244,7 +244,7 @@
 				this.Y = Y;//Y轴坐标
 				this.img = myTankImg0;
 				this.draw = function(){
-					ctx.drawImage(this.img,0,0,100,100,this.X,this.Y,50,50);
+					ctx.drawImage(this.img,0,0,1000,1000,this.X,this.Y,50,50);
 				};
 			}
 			
@@ -270,7 +270,7 @@
 				this.img = 100==id?myTankImg0:myTank2Img0;
 				this.time = Math.floor(Math.random()*50);
 				this.draw = function(){
-					ctx.drawImage(this.img,0,0,100,100,this.X,this.Y,tankWidth,tankWidth);
+					ctx.drawImage(this.img,0,0,1000,1000,this.X,this.Y,tankWidth,tankWidth);
 				};
 				this.move = function(){
 					if(this.direction == 0){
@@ -703,6 +703,7 @@
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
+						$('.select').css("background-image","url(img/rank.png)");
 						$('.select').css('display','block').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 						aTankCount = [];//清空所有敌方Tank
 						aMyTankCount = [];//清空所有所有我方Tank
@@ -721,6 +722,7 @@
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
+						$('.select').css("background-image","url(img/rank.png)");
 						$('.select').css('display','block').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 						aTankCount = [];//清空所有敌方Tank
 						aMyTankCount = [];//清空所有所有我方Tank
@@ -740,6 +742,7 @@
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
+						$('.select').css("background-image","url(img/rank.png)");
 						$('.select').css('display','block').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 						aTankCount = [];//清空所有敌方Tank
 						aMyTankCount = [];//清空所有所有我方Tank
