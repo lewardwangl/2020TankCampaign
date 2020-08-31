@@ -73,6 +73,15 @@
 		<audio id="boom" autoplay>
 			<source src="music/boom.mp3" type="audio/mp3">
 		</audio>
+		<audio id="bgm1" autoplay>
+			<source src="music/1.mp3" type="audio/mp3">
+		</audio>
+		<audio id="bgm2" autoplay>
+			<source src="music/2.mp3" type="audio/mp3">
+		</audio>
+		<audio id="bgm3" autoplay>
+			<source src="music/3.mp3" type="audio/mp3">
+		</audio>
 		<canvas id="canvas" style="margin-top: 100;"></canvas>
 		<script>
 			var tagmusic = document.getElementById("tagmusic");
@@ -112,6 +121,9 @@
 						player1CollideNum = 0;
 						player2CollideNum = 0;
 						createMyTank(100);
+						audioplay(attack)
+						var rr =  "bgm"+(Math.floor(Math.random()*2)+1)
+						bgmplay(eval(rr))
 						for(var i = 0; i < passNum * 10; i++){
 							createTank(i);
 						}
@@ -200,6 +212,26 @@
 //				loop();
 //			},20);
 //			
+			function bgmplay(play)
+			{
+				var array = new Array()
+				array.push("bgm1")
+				array.push("bgm2")
+				array.push("bgm3")
+				array.forEach(element => {
+					var r = document.getElementById(element); 
+					if (null!=r)
+					{
+						r.pause()
+					}
+				});
+				if(undefined!=play && ""!=play){
+					play.play()
+					play.volume = 0.4;
+					play.loop=true
+				}
+
+			}
 			function audioplay(play)
 			{
 				var array = new Array()
@@ -712,6 +744,7 @@
 						aBulletCount = [];//清空所有敌方坦克子弹
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
+						bgmplay("")
 						audioplay(remix)
 						return true;
 					}
@@ -731,6 +764,7 @@
 						aBulletCount = [];//清空所有敌方坦克子弹
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
+						bgmplay("")
 						audioplay(remix)
 						return true;
 					}
@@ -751,6 +785,7 @@
 						aBulletCount = [];//清空所有敌方坦克子弹
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
+						bgmplay("")
 						audioplay(remix)
 					return true
 					if(waitTime){return;}
