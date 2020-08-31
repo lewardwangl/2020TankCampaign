@@ -9,22 +9,22 @@
 		<script type="text/javascript" src="js/playerB.js"></script>
 		<style type="text/css">
 			*{margin:0;padding:0;}
-			html,body{width:100%;height: 100%;}
+			html,body{width:100%;height: 100%;align-self:center;}
 			body{background-color: #000;overflow: hidden;}
 			.select{width:800px;height:350px;position:absolute;left:50%;margin-left:-400px;top:-400px;opacity:0.2;background-image: url("img/splash.png");background-repeat:no-repeat;background-size:100% 100%;}
-			.select h2{height:100px;line-height:50px;text-align: center;display:none;}
+			.select h2{height:40px;line-height:50px;text-align: center;display:none;margin-top: 70px;}
 			.select p{text-align: center;font-size: 20px;display:none;}
 			.select p span{margin-right: 20px;}
 			.select input{display:block;width:400px;height:50px;border:1px solid #000;margin:0 auto;font-size:30px;outline: 0;cursor:pointer;}
 			/*.select input:nth-of-type(1){margin-top:80px;margin-bottom: 50px;}
 			.select input:hover{background-color: #fff;}*/
-			.bar{width:100%;height:100px;;flex-direction: column;;opacity:0.8;background-image: url("img/column2.png");background-repeat:no-repeat;background-size:100% 500%;}
-			.playerA{display:inline-block;;background-color: transparent;margin-left: 300px;}
-			.playerB{display:inline-block;;float: right;background-color: transparent;margin-right: 300px;}
+			.bar{width:100%;height:100px;;flex-direction: column;;opacity:0.8;}
+			.playerA{display:inline-block;;background-color: transparent;}
+			.playerB{display:inline-block;;float: right;background-color: transparent;}
 			.bardisplayA{font-size: 60px;width: 250px;color: skyblue;background-color: transparent;border-color: transparent}
-			.bardisplayB{font-size: 60px;width: 250px;color: red;background-color: transparent;border-color: transparent}
+			.bardisplayB{font-size: 60px;width: 250px;color: red;background-color: transparent;border-color: transparent;text-align: right;}
 			.bardisplayAnum{font-size: 60px;color: skyblue;width: 100px;;background-color:transparent;border-color: transparent}
-			.bardisplayBnum{font-size: 60px;color: red;width: 100px;;background-color: transparent;border-color: transparent}
+			.bardisplayBnum{font-size: 60px;color: red;width: 100px;;background-color: transparent;border-color: transparent;text-align: right}
 			.startbutton{margin-top:200px;}
 			.divbutton{ background-color:transparent;border-style:none;border-color: transparent}
 		</style>
@@ -33,12 +33,15 @@
 	<body>
 		<div class="bar">
 			<div class="playerA">
+				<img src="img/column1.png" style="width:150px;height:150px;"/>
 				<input class="bardisplayA" id="Player1barName" disabled='disabled' value="play1">
 				<input class="bardisplayAnum" id="player1Numbar" disabled='disabled' value="">
 			</div>
+			
 			<div class="playerB">
 				<input class="bardisplayBnum" id="player2Numbar" disabled='disabled' value="">
 				<input class="bardisplayB" id="Player2barName" disabled='disabled' value="play2">
+				<img src="img/column2.png" style="width:150px;height:150px;"/>
 			</div>
 		</div>
 		<div class="select">
