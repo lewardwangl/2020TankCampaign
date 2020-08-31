@@ -75,6 +75,15 @@
 		<audio id="boom" autoplay>
 			<source src="music/boom.mp3" type="audio/mp3">
 		</audio>
+		<audio id="bgm1" autoplay>
+			<source src="music/1.mp3" type="audio/mp3">
+		</audio>
+		<audio id="bgm2" autoplay>
+			<source src="music/2.mp3" type="audio/mp3">
+		</audio>
+		<audio id="bgm3" autoplay>
+			<source src="music/3.mp3" type="audio/mp3">
+		</audio>
 		<canvas id="canvas" ></canvas>
 		<script>
 			var tagmusic = document.getElementById("tagmusic");
@@ -134,6 +143,8 @@
 						createMyTank(200);
 						creatmetal(ametal)
 						audioplay(attack)
+						var rr =  "bgm"+(Math.floor(Math.random()*2)+1)
+						bgmplay(eval(rr))
 						for(var i = 0; i < passNum * 10; i++){
 							createTank(i);
 						}
@@ -234,6 +245,26 @@
 					}
 				});
 				play.play()
+			}
+			function bgmplay(play)
+			{
+				var array = new Array()
+				array.push("bgm1")
+				array.push("bgm2")
+				array.push("bgm3")
+				array.forEach(element => {
+					var r = document.getElementById(element); 
+					if (null!=r)
+					{
+						r.pause()
+					}
+				});
+				if(undefined!=play && ""!=play){
+					play.play()
+					play.volume = 0.4;
+					play.loop=true
+				}
+
 			}
 			function creatmetal(ametal){
 				var px = window.innerWidth
@@ -889,6 +920,7 @@
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
 						audioplay(remix)
+						bgmplay("")
 						return true;
 					}
 				}else{//2个玩家的时候
@@ -908,6 +940,7 @@
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
 						audioplay(remix)
+						bgmplay("")
 						return true;
 					}
 					else if(aTankCount.length == 0 && (player1Die || player2Die)){
@@ -927,6 +960,7 @@
 						aMyBulletCount1 = [];//清空所有子弹
 						aMyBulletCount2 = [];//清空所有子弹
 						audioplay(remix)
+						bgmplay("")
 						return true;
 					}
 				}
