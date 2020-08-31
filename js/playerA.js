@@ -9,7 +9,7 @@ window.playerA = new (class PlayerControl {
   }
 
   land() {
-    this.#setName();
+
     // 当前的坦克实例
     var cur = undefined
     var enr = undefined
@@ -195,6 +195,7 @@ window.playerA = new (class PlayerControl {
   }
 
   leave() {
+    this.#setName();
     document.onkeyup(this.#moveEv);
     document.onkeyup(this.#fireEv);
   }
@@ -446,8 +447,8 @@ window.playerA = new (class PlayerControl {
   // 设置队伍
   #setName() {
     document.getElementById(
-      `Player${this.type === "A" ? 1 : 2}Name`
-    ).textContent = `Eward Battle`;
+      `Player${this.type === "A" ? 1 : 2}barName`
+    ).value = "test1"
   }
   // 控制移动   举例子：  向左移动： this.#move(this.#DIRECTION.LEFT)
   #move(direction) {
