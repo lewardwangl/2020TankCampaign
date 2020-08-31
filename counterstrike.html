@@ -163,7 +163,7 @@
 			var canvas = document.getElementById('canvas');
 			var ctx = canvas.getContext('2d');
 			var screenX = window.innerWidth,
-				screenY = window.innerHeight-100,
+				screenY = window.innerHeight-200,
 				tankWidth = 50,//坦克宽度
 				bulletWidth = 10;//子弹宽度
 //				console.log(screenX,screenY);
@@ -237,7 +237,7 @@
 			}
 			function creatmetal(ametal){
 				var px = window.innerWidth
-				var py = window.innerHeight-100
+				var py = window.innerHeight-200
 
 				ametal.push([px/4 - 50,py/4 - 50,100,100])
 				ametal.push([px*3/4 - 50,py/4 - 50,100,100])
