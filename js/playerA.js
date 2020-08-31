@@ -139,7 +139,7 @@ window.playerA = new (class PlayerControl {
         } else if ((disX <= disY) && (enemyTank.X >= currentTankX) && this.#DIRECTION.STOP == Bullet[3] && this.#DIRECTION.STOP == Bullet[7] && this.#DIRECTION.STOP == Bullet[11]) {
           moveDirection = this.#DIRECTION.RIGHT;
           console.log("贴身战移动", moveDirection)
-        } else if ((disX >= disY) && (enemyTank.X < currentTankX) && this.#DIRECTION.STOP == Bullet[1] && this.#DIRECTION.STOP == Bullet[4] && this.#DIRECTION.STOP == Bullet[9]) {
+        } else if ((disX <= disY) && (enemyTank.X < currentTankX) && this.#DIRECTION.STOP == Bullet[1] && this.#DIRECTION.STOP == Bullet[4] && this.#DIRECTION.STOP == Bullet[9]) {
           moveDirection = this.#DIRECTION.LEFT;
           console.log("贴身战移动", moveDirection)
         }
