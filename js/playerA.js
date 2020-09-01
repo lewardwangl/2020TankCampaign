@@ -192,6 +192,7 @@ window.playerA = new (class PlayerControl {
     if (undefined != moveDirection) {
       console.log(moveDirection)
     }
+    this.#setName();
   }
 
   leave() {
@@ -449,6 +450,9 @@ window.playerA = new (class PlayerControl {
     document.getElementById(
       `Player${this.type === "A" ? 1 : 2}barName`
     ).value = "test1"
+    document.getElementById(
+      `Player${this.type === "A" ? 1 : 2}Name`
+    ).textContent = "test1"
   }
   // 控制移动   举例子：  向左移动： this.#move(this.#DIRECTION.LEFT)
   #move(direction) {
