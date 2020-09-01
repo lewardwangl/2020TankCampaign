@@ -139,7 +139,7 @@
 						createMyTank(100);
 						createMyTank(200);
 						audioplay(attack)
-						var rr =  "bgm"+(Math.floor(Math.random()*2)+1)
+						var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
 						bgmplay(eval(rr))
 						for(var i = 0; i < passNum * 10; i++){
 							createTank(i);
@@ -734,12 +734,18 @@
 						clearInterval(timer);
 						$('.select h2').css('display','block');
 						$('.select p').css('display','block');
+						$('#result').css('display','none');
+						$('#Player1Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
+						$('#player1Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
+						$('#Player2Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
+						$('#player2Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
 						$('#player1Num').text(player1CollideNum);
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
-						$('.select').css("background-image","url(img/rank.png)");
-						$('.select').css('display','block').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
+						$('.select').css("background-image","url(img/both-lose.png)");
+						$('.select').css({"width":"1280px","height":"800px","margin-left":"-640px","top":"0px"});
+						$('.select').css('display','block').animate({'top':'35%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 						aTankCount = [];//清空所有敌方Tank
 						aMyTankCount = [];//清空所有所有我方Tank
 						aBulletCount = [];//清空所有敌方坦克子弹
@@ -754,12 +760,19 @@
 						clearInterval(timer);
 						$('.select h2').css('display','block');
 						$('.select p').css('display','block');
+
+						$('#result').css('display','none');
+						$('#Player1Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
+						$('#player1Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
+						$('#Player2Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
+						$('#player2Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
 						$('#player1Num').text(player1CollideNum);
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
-						$('.select').css("background-image","url(img/rank.png)");
-						$('.select').css('display','block').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
+						$('.select').css("background-image","url(img/both-lose.png)");
+						$('.select').css({"width":"1280px","height":"800px","margin-left":"-640px","top":"0px"});
+						$('.select').css('display','block').animate({'top':'35%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 						aTankCount = [];//清空所有敌方Tank
 						aMyTankCount = [];//清空所有所有我方Tank
 						aBulletCount = [];//清空所有敌方坦克子弹
@@ -775,12 +788,28 @@
 					$('#result').text("victory")
 						$('.select h2').css('display','block');
 						$('.select p').css('display','block');
+						$('#result').css('display','none');
+						$('#Player1Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
+						$('#player1Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
+						$('#Player2Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
+						$('#player2Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
+
 						$('#player1Num').text(player1CollideNum);
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
-						$('.select').css("background-image","url(img/rank.png)");
-						$('.select').css('display','block').animate({'top':'50%','margin-top':'-200px','opacity':'0.8'}, 'slow');
+						if(player1CollideNum<player2CollideNum){
+							$('#Player2Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
+							$('#player2Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
+							$('#Player1Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
+							$('#player1Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
+							$('.select').css("background-image","url(img/mytank2win.png)");
+						}else{
+							$('.select').css("background-image","url(img/mytankwin.png)");
+						}
+						
+						$('.select').css({"width":"1280px","height":"800px","margin-left":"-640px","top":"0px"});
+						$('.select').css('display','block').animate({'top':'35%','margin-top':'-200px','opacity':'0.8'}, 'slow');
 						aTankCount = [];//清空所有敌方Tank
 						aMyTankCount = [];//清空所有所有我方Tank
 						aBulletCount = [];//清空所有敌方坦克子弹
