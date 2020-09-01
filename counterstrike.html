@@ -973,7 +973,7 @@
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
-						if(player1Die ||  player2CollideNum>player1CollideNum){
+						if(player1Die ||  (false==player2Die && player2CollideNum>player1CollideNum)){
 							$('#Player2Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
 							$('#player2Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
 							$('#Player1Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
