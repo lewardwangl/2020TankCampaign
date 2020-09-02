@@ -21,6 +21,7 @@
 			.bar{width:100%;height:100px;;flex-direction: column;;opacity:0.8;}
 			.playerA{display:inline-block;;background-color: transparent;}
 			.playerB{display:inline-block;;float: right;background-color: transparent;}
+			.remaintime{display:inline-block;;background-color: transparent;left:50%;margin-left:-100px;position:absolute}
 			.bardisplayA{font-size: 60px;width: 250px;color: skyblue;background-color: transparent;border-color: transparent}
 			.bardisplayB{font-size: 60px;width: 250px;color: red;background-color: transparent;border-color: transparent;text-align: right;}
 			.bardisplayAnum{font-size: 60px;color: skyblue;width: 100px;;background-color:transparent;border-color: transparent}
@@ -37,7 +38,9 @@
 				<input class="bardisplayA" id="Player1barName" disabled='disabled' value="play1">
 				<input class="bardisplayAnum" id="player1Numbar" disabled='disabled' value="">
 			</div>
-			
+			<div class="remaintime" style="width:150px;height:150px;">
+				<input class="bardisplayBnum" id="remain" disabled='disabled'>
+			</div>
 			<div class="playerB">
 				<input class="bardisplayBnum" id="player2Numbar" disabled='disabled' value="">
 				<input class="bardisplayB" id="Player2barName" disabled='disabled' value="play2">
@@ -100,6 +103,8 @@
 				passNum = 0;//通关数
 			var player1CollideNum = 0,//play1击中坦克数量
 				player2CollideNum = 0;//play2击中坦克数量
+			var remaintime = 30*1000 //30
+			var curremaintime = 0
 			var ametal = [] //阻挡的位置
 			$(document).ready(function(){
 				
@@ -122,7 +127,7 @@
 						player2CollideNum = 0;
 						createMyTank(100);
 						creatmetal(ametal)
-						for(var i = 0; i < passNum * 10; i++){
+						for(var i = 0; i < passNum * 20; i++){
 							createTank(i);
 						}
 						timer = setInterval(function(){
@@ -145,7 +150,7 @@
 						audioplay(attack)
 						var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
 						bgmplay(eval(rr))
-						for(var i = 0; i < passNum * 10; i++){
+						for(var i = 0; i < passNum * 20; i++){
 							createTank(i);
 						}
 						timer = setInterval(function(){
@@ -639,6 +644,19 @@
 				var rb = playerB.land()
 				$('#Player1barName').val(ra);
 				$('#Player2barName').val(rb);
+				if(aTankCount.length==0)
+				{
+					if(0==curremaintime)
+					{
+						curremaintime = (new Date()).valueOf()
+					}
+					var cur = (new Date()).valueOf()
+					remaintime = 30 - Math.floor((cur-curremaintime)/1000) 
+					if(remaintime>=0){
+						$('#remain').val(remaintime);
+					}
+
+				}
 				if(checkGameOver()){return};
 				ctx.clearRect(0,0,screenX,screenY);
 				var aTankCollide = [],//存储被击中的敌方坦克
@@ -974,6 +992,43 @@
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
 						if(player1Die ||  (false==player2Die && player2CollideNum>player1CollideNum)){
+							$('#Player2Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
+							$('#player2Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
+							$('#Player1Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
+							$('#player1Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
+							$('.select').css("background-image","url(img/mytank2win.png)");
+						}else{
+							$('.select').css("background-image","url(img/mytankwin.png)");
+						}
+						
+						$('.select').css({"width":"1280px","height":"800px","margin-left":"-640px","top":"0px"});
+						$('.select').css('display','block').animate({'top':'35%','margin-top':'-200px','opacity':'0.8'}, 'slow');
+						aTankCount = [];//清空所有敌方Tank
+						aMyTankCount = [];//清空所有所有我方Tank
+						aBulletCount = [];//清空所有敌方坦克子弹
+						aMyBulletCount1 = [];//清空所有子弹
+						aMyBulletCount2 = [];//清空所有子弹
+						audioplay(remix)
+						bgmplay("")
+						return true;
+					}
+					else if(aTankCount.length == 0 && false ==player1Die  && false==player2Die && remaintime<0){
+						clearInterval(timer);
+						$('#result').text("victory")
+						$('.select h2').css('display','block');
+						$('.select p').css('display','block');
+
+						$('#result').css('display','none');
+						$('#Player1Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
+						$('#player1Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
+						$('#Player2Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
+						$('#player2Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
+
+						$('#player1Num').text(player1CollideNum);
+						$('#player2Num').text(player2CollideNum);
+						$('#player1Numbar').val(player1CollideNum);
+						$('#player2Numbar').val(player2CollideNum);
+						if(player2CollideNum>player1CollideNum){
 							$('#Player2Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
 							$('#player2Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
 							$('#Player1Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
