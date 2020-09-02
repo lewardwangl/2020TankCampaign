@@ -124,7 +124,7 @@
 						audioplay(attack)
 						var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
 						bgmplay(eval(rr))
-						for(var i = 0; i < passNum * 10; i++){
+						for(var i = 0; i < passNum * 20; i++){
 							createTank(i);
 						}
 						timer = setInterval(function(){
@@ -143,7 +143,7 @@
 						player2CollideNum = 0;
 						createMyTank(100);
 						createMyTank(200);
-						for(var i = 0; i < passNum * 10; i++){
+						for(var i = 0; i < passNum * 20; i++){
 							createTank(i);
 						}
 						timer = setInterval(function(){
