@@ -749,7 +749,7 @@
 					if(bullet.X > screenX || bullet.X < -10 || bullet.Y > screenY || bullet.Y < -10){//跑出屏幕的炮弹
 						aDelMyBullet1.push(i);
 					}
-					var ret = collisionMetal(bullet.X,bullet.Y,bulletWidth)//检测和金属防御碰撞
+					var ret = collisionMetal(bullet.X - bulletWidth / 2,bullet.Y - bulletWidth / 2,bulletWidth)//检测和金属防御碰撞
 					if(true == ret)
 					{
 						ctx.drawImage(boomImg,0,0,36,36,bullet.X - 18,bullet.Y  - 18,36,36);//画爆炸效果
@@ -767,7 +767,7 @@
 					if(bullet.X > screenX || bullet.X < -10 || bullet.Y > screenY || bullet.Y < -10){//跑出屏幕的炮弹
 						aDelMyBullet2.push(i);
 					}
-					var ret = collisionMetal(bullet.X,bullet.Y,bulletWidth)//检测和金属防御碰撞
+					var ret = collisionMetal(bullet.X - bulletWidth / 2,bullet.Y - bulletWidth / 2,bulletWidth)//检测和金属防御碰撞
 					if(true == ret)
 					{
 						ctx.drawImage(boomImg,0,0,36,36,bullet.X - 18,bullet.Y  - 18,36,36);//画爆炸效果
@@ -880,7 +880,7 @@
 					if(bullet.X > screenX || bullet.X < -10 || bullet.Y > screenY || bullet.Y < -10){//跑出屏幕的炮弹
 						aDelBullet.push(i);
 					}
-					var ret = collisionMetal(bullet.X,bullet.Y,bulletWidth)//检测和金属防御碰撞
+					var ret = collisionMetal(bullet.X - bulletWidth / 2,bullet.Y - bulletWidth / 2,bulletWidth)//检测和金属防御碰撞
 					if(true == ret)
 					{
 						ctx.drawImage(boomImg,0,0,36,36,bullet.X - 18,bullet.Y  - 18,36,36);//画爆炸效果
