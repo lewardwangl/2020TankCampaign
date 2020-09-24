@@ -84,7 +84,13 @@
 			</audio>
 			<canvas id="canvas" style="margin-top: 100;"></canvas>
 		<script>
-						var tagmusic = document.getElementById("tagmusic");
+			function getUrlParam(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+				var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+				if (r != null) return unescape(r[2]); return null; //返回参数值
+			}
+			var battl_id = -1
+			var tagmusic = document.getElementById("tagmusic");
 			var startMusic = document.getElementById("startMusic");
 			var remix = document.getElementById("remix");
 			var attack = document.getElementById("attack");
@@ -131,6 +137,13 @@
 					playerNum = 2;
 					$('.select').animate({'top':'-400px','margin-top':'0','opacity':'0.2'}, 'slow',function(){
 						$('.select').css('display','none');
+						var id = getUrlParam('battle_id');
+						if(null==id)
+						{
+							alert("请输入比赛编号");
+							return;
+						}
+						battl_id = id
 						player1Die = false;
 						player2Die = false;
 						passNum = 1;
@@ -141,7 +154,7 @@
 						audioplay(attack)
 						var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
 						bgmplay(eval(rr))
-						for(var i = 0; i < passNum * 20; i++){
+						for(var i = 0; i < passNum * 1; i++){
 							createTank(i);
 						}
 						timer = setInterval(function(){
@@ -212,7 +225,7 @@
 			myTank2Img2.src="img/mytank2-img2.png";
 			myTank2Img3.src="img/mytank2-img3.png";
 			boomImg.src="img/boom-img.png";
-			metal.src = "img/d1160924ab18972b052b38a3e4cd7b899e510a41.jpg"
+			metal.src = "img/metal.png"
 			
 //			var timer = setInterval(function(){
 //				loop();
@@ -757,6 +770,21 @@
 					}
 				}else{//2个玩家的时候
 					if(player1Die && player2Die){
+						var p1name = $('#Player1Name').text()
+					var p2name = $('#Player2Name').text()
+					jsonobj = {"battle_id":Number(battl_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum),}
+					$.ajax({
+						type:'POST',
+						url:"http://10.11.159.156:7834/api/tank/rank?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa",
+						data:jsonobj,
+						dataType:"json",
+						success:function(xhr, textStatus, errorThrown){
+							alert(textStatus)
+						},
+						error:function(xhr, textStatus, errorThrown){
+							alert(textStatus)
+						},
+					})
 						clearInterval(timer);
 						$('.select h2').css('display','block');
 						$('.select p').css('display','block');
@@ -784,6 +812,24 @@
 					}
 				}
 				if(aTankCount.length == 0){//当所有坦克都被消灭的时候进入下一关
+					var p1name = $('#Player1Name').text()
+					var p2name = $('#Player2Name').text()
+					var jsonobj = new Object()
+					jsonobj = {"battle_id":Number(battl_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum)}
+					jsonobj = JSON.stringify(jsonobj)
+					$.ajax({
+						type:'POST',
+						url:"http://10.11.159.156:7834/api/tank/rank?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa",
+						data:jsonobj,
+						dataType: 'json',
+						contentType: 'application/json;charset=UTF-8',
+					success:function(xhr, textStatus, errorThrown){
+						alert(textStatus)
+					},
+					error:function(xhr, textStatus, errorThrown){
+						alert(textStatus)
+					},
+					})
 					clearInterval(timer);
 					$('#result').text("victory")
 						$('.select h2').css('display','block');
