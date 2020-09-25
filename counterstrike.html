@@ -89,6 +89,12 @@
 		</audio>
 		<canvas id="canvas" ></canvas>
 		<script>
+			function getUrlParam(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+				var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+				if (r != null) return unescape(r[2]); return null; //返回参数值
+			}
+			var battle_id = -1
 			var tagmusic = document.getElementById("tagmusic");
 			var startMusic = document.getElementById("startMusic");
 			var remix = document.getElementById("remix");
@@ -139,23 +145,52 @@
 					playerNum = 2;
 					$('.select').animate({'top':'-400px','margin-top':'0','opacity':'0.2'}, 'slow',function(){
 						$('.select').css('display','none');
-						player1Die = false;
-						player2Die = false;
-						passNum = 1;
-						player1CollideNum = 0;
-						player2CollideNum = 0;
-						createMyTank(100);
-						createMyTank(200);
-						creatmetal(ametal)
-						audioplay(attack)
-						var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
-						bgmplay(eval(rr))
-						for(var i = 0; i < passNum * 20; i++){
-							createTank(i);
+						var id = getUrlParam('battle_id');
+						if(null==id)
+						{
+							alert("请输入比赛编号");
+							return;
 						}
-						timer = setInterval(function(){
-							loop();
-						},20);
+						battle_id = id
+						jsonobj = {"battle_id":Number(battle_id),"type":"wheel_war"}
+						jsonobj = JSON.stringify(jsonobj)
+						var rettest = false
+						$.ajax({
+							type:'GET',
+							url:"http://10.11.159.156:7834/api/tank/battle/isexists?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa&type=final&battle_id="+Number(battle_id),
+							//data:jsonobj,
+							//dataType: 'json',
+							contentType: 'application/json;charset=UTF-8',
+							success:function(xhr, textStatus, errorThrown){
+								rettest = xhr.isExist
+								if(false==rettest)
+								{
+									alert("比赛号重复")
+									return
+								}
+								player1Die = false;
+								player2Die = false;
+								passNum = 1;
+								player1CollideNum = 0;
+								player2CollideNum = 0;
+								createMyTank(100);
+								createMyTank(200);
+								creatmetal(ametal)
+								audioplay(attack)
+								var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
+								bgmplay(eval(rr))
+								for(var i = 0; i < passNum * 20; i++){
+									createTank(i);
+								}
+								timer = setInterval(function(){
+									loop();
+								},20);
+									},
+									error:function(xhr, textStatus, errorThrown){
+										alert(textStatus)
+									},
+								})
+						
 					});
 				});
 				
@@ -975,7 +1010,7 @@
 						bgmplay("")
 						return true;
 					}
-					else if(aTankCount.length == 0 && (player1Die || player2Die)){
+					else if(aTankCount.length >= 0 && (player1Die || player2Die)){
 						clearInterval(timer);
 						$('#result').text("victory")
 						$('.select h2').css('display','block');
@@ -991,15 +1026,36 @@
 						$('#player2Num').text(player2CollideNum);
 						$('#player1Numbar').val(player1CollideNum);
 						$('#player2Numbar').val(player2CollideNum);
+						var win = ""
 						if(player1Die){
 							$('#Player2Name').css({"position": "absolute","left": "240px","top": "380px","font-size": "48px"});
 							$('#player2Num').css({"position": "absolute","left": "240px","top": "420px","font-size": "48px"});
 							$('#Player1Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
 							$('#player1Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
 							$('.select').css("background-image","url(img/mytank2win.png)");
+
 						}else{
 							$('.select').css("background-image","url(img/mytankwin.png)");
 						}
+
+						var p1name = $('#Player1Name').text()
+						var p2name = $('#Player2Name').text()
+						var win = ""
+						if(player1Die){ win = p2name}else{win=p1name}
+						jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"playerB":p1name,"win":win}
+						jsonobj = JSON.stringify(jsonobj)
+						$.ajax({
+							type:'POST',
+							url:"http://10.11.159.156:7834/api/tank/rank/final?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa",
+							data:jsonobj,
+							dataType:"json",
+							success:function(xhr, textStatus, errorThrown){
+								alert(textStatus)
+							},
+							error:function(xhr, textStatus, errorThrown){
+								alert(textStatus)
+							},
+						})
 						
 						$('.select').css({"width":"1280px","height":"800px","margin-left":"-640px","top":"0px"});
 						$('.select').css('display','block').animate({'top':'35%','margin-top':'-200px','opacity':'0.8'}, 'slow');

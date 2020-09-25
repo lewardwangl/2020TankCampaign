@@ -89,7 +89,7 @@
 				var r = window.location.search.substr(1).match(reg);  //匹配目标参数
 				if (r != null) return unescape(r[2]); return null; //返回参数值
 			}
-			var battl_id = -1
+			var battle_id = -1
 			var tagmusic = document.getElementById("tagmusic");
 			var startMusic = document.getElementById("startMusic");
 			var remix = document.getElementById("remix");
@@ -143,23 +143,46 @@
 							alert("请输入比赛编号");
 							return;
 						}
-						battl_id = id
-						player1Die = false;
-						player2Die = false;
-						passNum = 1;
-						player1CollideNum = 0;
-						player2CollideNum = 0;
-						createMyTank(100);
-						createMyTank(200);
-						audioplay(attack)
-						var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
-						bgmplay(eval(rr))
-						for(var i = 0; i < passNum * 1; i++){
-							createTank(i);
-						}
-						timer = setInterval(function(){
-							loop();
-						},20);
+
+						battle_id = id
+						jsonobj = {"battle_id":Number(battle_id),"type":"wheel_war"}
+						jsonobj = JSON.stringify(jsonobj)
+						var rettest = false
+						$.ajax({
+							type:'GET',
+							url:"http://10.11.159.156:7834/api/tank/battle/isexists?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa&type=wheel_war&battle_id="+Number(battle_id),
+							//data:jsonobj,
+							//dataType: 'json',
+							contentType: 'application/json;charset=UTF-8',
+							success:function(xhr, textStatus, errorThrown){
+								rettest = xhr.isExist
+								if(false==rettest)
+								{
+									alert("比赛号重复")
+									return
+								}
+								player1Die = false;
+								player2Die = false;
+								passNum = 1;
+								player1CollideNum = 0;
+								player2CollideNum = 0;
+								createMyTank(100);
+								createMyTank(200);
+								audioplay(attack)
+								var rr =  "bgm"+(Math.floor(Math.random()*3)+1)
+								bgmplay(eval(rr))
+								for(var i = 0; i < passNum * 20; i++){
+									createTank(i);
+								}
+								timer = setInterval(function(){
+									loop();
+								},20);
+							},
+							error:function(xhr, textStatus, errorThrown){
+								alert(textStatus)
+							},
+						})
+						
 					});
 				});
 
@@ -772,7 +795,8 @@
 					if(player1Die && player2Die){
 						var p1name = $('#Player1Name').text()
 					var p2name = $('#Player2Name').text()
-					jsonobj = {"battle_id":Number(battl_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum),}
+					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum)}
+					jsonobj = JSON.stringify(jsonobj)
 					$.ajax({
 						type:'POST',
 						url:"http://10.11.159.156:7834/api/tank/rank?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa",
@@ -815,7 +839,7 @@
 					var p1name = $('#Player1Name').text()
 					var p2name = $('#Player2Name').text()
 					var jsonobj = new Object()
-					jsonobj = {"battle_id":Number(battl_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum)}
+					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum)}
 					jsonobj = JSON.stringify(jsonobj)
 					$.ajax({
 						type:'POST',
