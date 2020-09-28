@@ -286,7 +286,7 @@
 			function createTank(i){
 				var rank = Math.floor(Math.random()*3);
 				var speed = 2;
-				var direction = 1;
+				var direction = Math.round(Math.random()*3);;
 				var randomNum = Math.round(Math.random()*15);
 				var tank = i % 2 == 0 ? new Tank(++tankID, aTankClass[rank]['rank'], aTankClass[rank]['color'], speed, direction, 10*randomNum, Math.round(Math.random()*15) * 10) : new Tank(++tankID, aTankClass[rank]['rank'], aTankClass[rank]['color'], speed, direction, screenX -10*randomNum - 50, 10 * Math.round(Math.random()*15));
 				aTankCount.push(tank);
