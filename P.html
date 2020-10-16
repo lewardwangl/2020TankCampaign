@@ -152,7 +152,7 @@
 							return;
 						}
 						battle_id = id
-						jsonobj = {"battle_id":Number(battle_id),"invalid":Boolean(false)}
+						jsonobj = {"id":Number(battle_id),"invalid":Boolean(true),"type":'wheel_war'}
 						jsonobj = JSON.stringify(jsonobj)
 						var rettest = false
 						$.ajax({
@@ -165,9 +165,10 @@
 								rettest = xhr.isExist
 								if(true==rettest)
 								{
-									//alert("比赛号重复")
+									alert("比赛号重复")
 									return
 								}
+								return
 								player1Die = false;
 								player2Die = false;
 								passNum = 1;
@@ -202,10 +203,9 @@
 					$('#twoPlayer').fadeOut(100).fadeIn(100);
 					}, 200)
 					audioplay(startMusic)
-					setTimeout(() => {
 						clearInterval(splash)
 						$('#twoPlayer').click()
-					}, 3*1000);
+
 				});
 			
 
