@@ -615,7 +615,7 @@
 					tank.changeDir();
 					tank.fire();
 				}
-				aTankCollide.reverse();
+				aTankCollide.sort((a,b)=>{return b - a})
 				aMyBulletCollide1.reverse();
 				aMyBulletCollide2.reverse();
 				for(var i = 0, aTankCollideLen = aTankCollide.length; i < aTankCollideLen; i++){//删除被击中的敌方Tank
