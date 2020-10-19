@@ -796,7 +796,7 @@
 					if(player1Die && player2Die){
 						var p1name = $('#Player1Name').text()
 					var p2name = $('#Player2Name').text()
-					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum)}
+					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p2name,"scoreB":Number(player2CollideNum)}
 					jsonobj = JSON.stringify(jsonobj)
 					$.ajax({
 						type:'POST',
@@ -840,7 +840,7 @@
 					var p1name = $('#Player1Name').text()
 					var p2name = $('#Player2Name').text()
 					var jsonobj = new Object()
-					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p1name,"scoreB":Number(player2CollideNum)}
+					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p2name,"scoreB":Number(player2CollideNum)}
 					jsonobj = JSON.stringify(jsonobj)
 					$.ajax({
 						type:'POST',

@@ -1044,7 +1044,7 @@
 						var p2name = $('#Player2Name').text()
 						var win = ""
 						if(player1Die){ win = p2name}else{win=p1name}
-						jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"playerB":p1name,"win":win}
+						jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"playerB":p2name,"win":win}
 						jsonobj = JSON.stringify(jsonobj)
 						$.ajax({
 							type:'POST',
