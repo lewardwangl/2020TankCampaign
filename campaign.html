@@ -90,6 +90,7 @@
 				if (r != null) return unescape(r[2]); return null; //返回参数值
 			}
 			var battle_id = -1
+			var GameOver = false
 			var tagmusic = document.getElementById("tagmusic");
 			var startMusic = document.getElementById("startMusic");
 			var remix = document.getElementById("remix");
@@ -149,6 +150,7 @@
 						jsonobj = JSON.stringify(jsonobj)
 						var rettest = false
 						$.ajax({
+   							async: false,
 							type:'GET',
 							url:"http://10.11.159.156:7834/api/tank/battle/isexists?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa&type=wheel_war&battle_id="+Number(battle_id),
 							//data:jsonobj,
@@ -586,7 +588,8 @@
 				var rb = playerB.land()
 				$('#Player1barName').val(ra);
 				$('#Player2barName').val(rb);
-				if(checkGameOver()){return};
+				if(GameOver){return};
+				GameOver = checkGameOver()
 				ctx.clearRect(0,0,screenX,screenY);
 				var aTankCollide = [],//存储被击中的敌方坦克
 					aMyBulletCollide1 = [],//我方击中坦克的炮弹
@@ -799,6 +802,7 @@
 					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p2name,"scoreB":Number(player2CollideNum)}
 					jsonobj = JSON.stringify(jsonobj)
 					$.ajax({
+						async: false,
 						type:'POST',
 						url:"http://10.11.159.156:7834/api/tank/rank?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa",
 						data:jsonobj,
@@ -843,6 +847,7 @@
 					jsonobj = {"battle_id":Number(battle_id),"playerA":p1name,"scoreA":Number(player1CollideNum),"playerB":p2name,"scoreB":Number(player2CollideNum)}
 					jsonobj = JSON.stringify(jsonobj)
 					$.ajax({
+						async: false,
 						type:'POST',
 						url:"http://10.11.159.156:7834/api/tank/rank?_tc=sZXczvbznhjasdzdddasfgddsZXcvddbnhjhtyredwasDFGHJdYTfREaWAsa",
 						data:jsonobj,
