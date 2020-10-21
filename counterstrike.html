@@ -1096,8 +1096,10 @@
 							$('#Player1Name').css({"position": "absolute","left": "850px","top": "500px","font-size": "48px"});
 							$('#player1Num').css({"position": "absolute","left": "850px","top": "550px","font-size": "48px"});
 							$('.select').css("background-image","url(img/mytank2win.png)");
-						}else{
+						}else if(player2CollideNum<player1CollideNum){
 							$('.select').css("background-image","url(img/mytankwin.png)");
+						}else if(player2CollideNum==player1CollideNum){
+							$('.select').css("background-image","url(img/both-lose.png)");
 						}
 						
 						$('.select').css({"width":"1280px","height":"800px","margin-left":"-640px","top":"0px"});
